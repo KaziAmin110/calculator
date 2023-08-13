@@ -30,8 +30,17 @@ body {
 }
 
 .display-container {
-    border: 1px solid green;
+    display: flex;
     height: 90px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-right: 12px;
+}
+
+.display {
+    font-size: 30px;
+    font-weight: bold;
+    
 }
 
 .buttons-container {
@@ -41,7 +50,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 18px;
 }
 
 .numbers {
@@ -53,5 +62,9 @@ body {
 .operand {
     width: 40px;
     height: 30px;
-    
+
+}
+
+.zero {
+    width: 272px;
 }
