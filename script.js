@@ -1,5 +1,4 @@
 let firstNumber, secondNumber, operator;
-
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
     return a + b;
@@ -18,7 +17,7 @@ const division = function divide(a, b) {
 }
 
 // operation function - takes operator and two numbers and returns operation
-const operation = function operate(operator, firstNumber, secondNumber) {
+function operate(operator, firstNumber, secondNumber) {
     if (operator == addition)
         return addition(firstNumber, secondNumber);
     else if (operator == subtraction)
@@ -32,6 +31,8 @@ const operation = function operate(operator, firstNumber, secondNumber) {
 }
 
 // Populates display when number buttons are clicked .. stores in display value
+let displayValue = [];
+let displayValue1 = 0;
 const numbers = document.querySelectorAll('.numbers');
 
 numbers.forEach((number) => {
@@ -44,11 +45,30 @@ function display(e) {
     display.classList.add('display');
     display.textContent = e.target.textContent;
 
+    displayValue.push(Number(display.textContent));
     displayContainer.appendChild(display);
 
 }
 
-// Cleares display when AC button is clicked
+const operands = document.querySelectorAll('.operand');
+
+operands.forEach((operand) => {
+    operand.addEventListener('click', storesDisplay);
+})
+
+function storesDisplay() {
+    let finalVal = 0;
+    let power = displayValue.length - 1;
+    for (let i = 0; i < displayValue.length; i++) {
+        finalVal += (displayValue[i] * Math.pow(10, power));
+        power--;
+    }
+
+    clearDisplay();
+    displayValue1 = finalVal;
+}
+
+// Clears display when AC button is clicked
 
 const clear = document.querySelector('.clear');
 clear.addEventListener('click', clearDisplay);

@@ -53,6 +53,11 @@ body {
     gap: 18px;
 }
 
+.clear {
+    width: 40px;
+    height: 30px;
+}
+
 .numbers {
     width: 40px;
     height: 30px;
