@@ -9,12 +9,49 @@ body {
     border: 1px solid pink;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
 }
 
+.calculator-title {
+    border: 1px green solid;
+    margin-bottom: 50px;
+    font-size: 30px;
+    text-decoration: solid;
+}
+
 .calculator-container {
+    display: flex;
+    flex-direction: column;
     height: 350px;
-    width: 250px;
+    width: 300px;
     border: 1px solid red;
 
+}
+
+.display-container {
+    border: 1px solid green;
+    height: 90px;
+}
+
+.buttons-container {
+    border:1px solid blue;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.numbers {
+    width: 40px;
+    height: 30px;
+
+}
+
+.operand {
+    width: 40px;
+    height: 30px;
+    
 }
