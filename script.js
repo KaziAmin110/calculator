@@ -31,11 +31,11 @@ const operation = function operate(operator, firstNumber, secondNumber) {
         return "ERROR OPERATING";
 }
 
-// Populates display when number buttons are clicked 
+// Populates display when number buttons are clicked .. stores in display value
 const numbers = document.querySelectorAll('.numbers');
 
 numbers.forEach((number) => {
-    number.addEventListener('click', display)
+    number.addEventListener('click', display);
 })
 
 function display(e) {
@@ -45,4 +45,19 @@ function display(e) {
     display.textContent = e.target.textContent;
 
     displayContainer.appendChild(display);
+
+}
+
+// Cleares display when AC button is clicked
+
+const clear = document.querySelector('.clear');
+clear.addEventListener('click', clearDisplay);
+
+function clearDisplay() {
+    const displayContainer = document.querySelector('.display-container');
+    const numbers = document.querySelectorAll('.display');
+
+    numbers.forEach((number) => {
+        displayContainer.removeChild(number);
+    })
 }
