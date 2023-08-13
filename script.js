@@ -16,23 +16,39 @@ const division = function divide(a, b) {
     return a / b;
 }
 
+
+function getOperation(e) {
+    operationValue = e.target.textContent;
+}
+
 // operation function - takes operator and two numbers and returns operation
-function operate(operator, firstNumber, secondNumber) {
-    if (operator == addition)
-        return addition(firstNumber, secondNumber);
-    else if (operator == subtraction)
-        return subtraction(firstNumber, secondNumber);
-    else if (operate == multiplication)
-        return multiplication(firstNumber, secondNumber);
-    else if (operate == division)
-        return division(firstNumber, secondNumber);
+function operate() {
+    const displayContainer = document.querySelector('.display-container');
+    const display = document.createElement('p');
+    display.classList.add('display');
+    storesDisplay();
+
+
+    if (operationValue == '+')
+        display.textContent = addition(storedValues[0], storedValues[1]);
+    else if (operationValue == '-')
+        display.textContent = subtraction(storedValues[0], storedValues[1]);
+    else if (operationValue == 'x')
+        display.textContent = multiplication(storedValues[0], storedValues[1]);
+    else if (operationValue == '/')
+        display.textContent = division(storedValues[0], storedValues[1]);
     else
         return "ERROR OPERATING";
+    
+    clearDisplay();
+    displayContainer.appendChild(display);
+    
+
 }
 
 // Populates display when number buttons are clicked .. stores in display value
 let displayValue = [];
-let displayValue1 = 0;
+let storedValues = [];
 const numbers = document.querySelectorAll('.numbers');
 
 numbers.forEach((number) => {
@@ -65,7 +81,7 @@ function storesDisplay() {
     }
 
     clearDisplay();
-    displayValue1 = finalVal;
+    storedValues.push(finalVal);
 }
 
 // Clears display when AC button is clicked
@@ -80,4 +96,19 @@ function clearDisplay() {
     numbers.forEach((number) => {
         displayContainer.removeChild(number);
     })
+
+    displayValue.splice(0,displayValue.length);
 }
+
+// Determines operation value
+
+let operationValue = '';
+const operations = document.querySelectorAll('.operand');
+operations.forEach((operation) => {
+    operation.addEventListener('click', getOperation);
+})
+
+// Performs operation when the equal key is pressed
+
+const equalKey = document.querySelector('.equal');
+equalKey.addEventListener('click', operate);
