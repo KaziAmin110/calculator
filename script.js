@@ -19,6 +19,7 @@ const division = function divide(a, b) {
 
 function getOperation(e) {
     operationValue = e.target.textContent;
+
 }
 
 // operation function - takes operator and two numbers and returns operation
@@ -26,6 +27,8 @@ function operate() {
     const displayContainer = document.querySelector('.display-container');
     const display = document.createElement('p');
     display.classList.add('display');
+
+
     storesDisplay();
 
 
@@ -39,10 +42,10 @@ function operate() {
         display.textContent = division(storedValues[0], storedValues[1]);
     else
         return "ERROR OPERATING";
-    
-    clearDisplay();
+
+    storedValues[0] = Number(display.textContent);
+    storedValues.pop();
     displayContainer.appendChild(display);
-    
 
 }
 
@@ -66,6 +69,7 @@ function display(e) {
 
 }
 
+// Converts display value array into numbers within storedValues
 const operands = document.querySelectorAll('.operand');
 
 operands.forEach((operand) => {
@@ -81,7 +85,8 @@ function storesDisplay() {
     }
 
     clearDisplay();
-    storedValues.push(finalVal);
+    if (finalVal != 0)
+        storedValues.push(finalVal);
 }
 
 // Clears display when AC button is clicked
@@ -112,3 +117,7 @@ operations.forEach((operation) => {
 
 const equalKey = document.querySelector('.equal');
 equalKey.addEventListener('click', operate);
+
+/* Notes
+- Works multiple times after all clear
+*/
