@@ -1,4 +1,6 @@
 let firstNumber, secondNumber, operator, prevOperation;
+let isResultStored = false;
+let startingWidth = 15;
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
     return a + b;
@@ -24,9 +26,9 @@ function getOperation(e) {
     else {
         operate();
         operationValue = e.target.textContent;
-        
     }
-        
+    
+    
     
 }
 
@@ -54,8 +56,10 @@ function operate() {
     operationValue = '';
     storedValues[0] = Number(display.textContent);
     storedValues.pop();
-    displayContainer.appendChild(display);
 
+    
+    displayContainer.appendChild(display);
+    isResultStored = true;
 }
 
 // Populates display when number buttons are clicked .. stores in display value
@@ -74,10 +78,11 @@ function display(e) {
     display.classList.add('display');
     display.textContent = e.target.textContent;
 
-    // Clears display while chaining operations
-    if (storedValues.length != 0) {
+    // Checks if Chaining is occuring (Result already in storedValues) ? clears : continues
+    if (isResultStored == true) {
         clearDisplay();
-    } 
+        isResultStored = false;
+    }
     displayValue.push(Number(display.textContent));
     displayContainer.appendChild(display);
 
@@ -121,6 +126,7 @@ function clearAC () {
     operationValue = '';
     displayValue.splice(0,displayValue.length);
     storedValues.splice(0,storedValues.length);
+    isResultStored = false;
 }
 
 
@@ -150,10 +156,6 @@ function clearDisplay() {
     displayValue.splice(0,displayValue.length);
 
 }
-
-// 
-
-
 
 
 // Checks that display is within its container
