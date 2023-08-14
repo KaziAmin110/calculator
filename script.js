@@ -24,6 +24,7 @@ function getOperation(e) {
     else {
         operate();
         operationValue = e.target.textContent;
+        
     }
         
     
@@ -73,6 +74,10 @@ function display(e) {
     display.classList.add('display');
     display.textContent = e.target.textContent;
 
+    // Clears display while chaining operations
+    if (storedValues.length != 0) {
+        clearDisplay();
+    } 
     displayValue.push(Number(display.textContent));
     displayContainer.appendChild(display);
 
@@ -146,19 +151,9 @@ function clearDisplay() {
 
 }
 
-// Checks if storedValues already has 2 values if so operand is declared
-
-operands.forEach((operand) => {
-    operand.addEventListener('click', checkValues);
-})
+// 
 
 
-function checkValues() {
-    if (storedValues.length == 2) {
-        operate();
-    }
-
-}
 
 
 // Checks that display is within its container
