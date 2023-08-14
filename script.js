@@ -1,4 +1,4 @@
-let firstNumber, secondNumber, operator;
+let firstNumber, secondNumber, operator, prevOperation;
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
     return a + b;
@@ -18,8 +18,15 @@ const division = function divide(a, b) {
 
 
 function getOperation(e) {
-    operationValue = e.target.textContent;
 
+    if (operationValue == '')
+        operationValue = e.target.textContent;
+    else {
+        operate();
+        operationValue = e.target.textContent;
+    }
+        
+    
 }
 
 // operation function - takes operator and two numbers and returns operation
@@ -43,6 +50,7 @@ function operate() {
     else
         return "ERROR OPERATING";
 
+    operationValue = '';
     storedValues[0] = Number(display.textContent);
     storedValues.pop();
     displayContainer.appendChild(display);
@@ -61,6 +69,7 @@ numbers.forEach((number) => {
 function display(e) {
     const displayContainer = document.querySelector('.display-container');
     const display = document.createElement('p');
+    
     display.classList.add('display');
     display.textContent = e.target.textContent;
 
@@ -87,23 +96,28 @@ function storesDisplay() {
     clearDisplay();
     if (finalVal != 0)
         storedValues.push(finalVal);
+    
+
 }
 
 // Clears display when AC button is clicked
 
 const clear = document.querySelector('.clear');
-clear.addEventListener('click', clearDisplay);
+clear.addEventListener('click', clearAC);
 
-function clearDisplay() {
+function clearAC () {
     const displayContainer = document.querySelector('.display-container');
     const numbers = document.querySelectorAll('.display');
-
+    
     numbers.forEach((number) => {
         displayContainer.removeChild(number);
     })
 
+    operationValue = '';
     displayValue.splice(0,displayValue.length);
+    storedValues.splice(0,storedValues.length);
 }
+
 
 // Determines operation value
 
@@ -118,6 +132,35 @@ operations.forEach((operation) => {
 const equalKey = document.querySelector('.equal');
 equalKey.addEventListener('click', operate);
 
-/* Notes
-- Works multiple times after all clear
-*/
+
+// Clears only the displayValue (Used in Operations where the storedValues are still utilized)
+function clearDisplay() {
+    const displayContainer = document.querySelector('.display-container');
+    const numbers = document.querySelectorAll('.display');
+
+    numbers.forEach((number) => {
+        displayContainer.removeChild(number);
+    })
+
+    displayValue.splice(0,displayValue.length);
+
+}
+
+// Checks if storedValues already has 2 values if so operand is declared
+
+operands.forEach((operand) => {
+    operand.addEventListener('click', checkValues);
+})
+
+
+function checkValues() {
+    if (storedValues.length == 2) {
+        operate();
+    }
+
+}
+
+
+// Checks that display is within its container
+
+

@@ -34,11 +34,13 @@ body {
     justify-content: flex-end;
     align-items: flex-end;
     margin-right: 12px;
+    border: 1px solid green;
 }
 
 .display {
     font-size: 30px;
     font-weight: bold;
+    border: 1px solid pink;
     
 }
 
