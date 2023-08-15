@@ -3,18 +3,29 @@ let isResultStored = false;
 let startingWidth = 15;
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
+    // Checks whether given number values are defined 
+    if (isUndefined(a, b)) {
+        return 0;
+    }
+
     return a + b;
 }
 
 const subtraction = function subtract(a, b) {
+    if (isUndefined(a, b))
+        return 0;
     return a - b;
 }
 
 const multiplication = function multiply(a, b) {
+    if (isUndefined(a, b))
+        return 0;
     return a * b;
 }
 
 const division = function divide(a, b) {
+    if (isUndefined(a, b))
+        return 0;
     return a / b;
 }
 
@@ -39,19 +50,20 @@ function operate() {
     display.classList.add('display');
 
 
+
     storesDisplay();
 
 
-    if (operationValue == '+')
+    if (operationValue == '+') {
         display.textContent = addition(storedValues[0], storedValues[1]);
+    }
     else if (operationValue == '-')
         display.textContent = subtraction(storedValues[0], storedValues[1]);
     else if (operationValue == 'x')
         display.textContent = multiplication(storedValues[0], storedValues[1]);
     else if (operationValue == '/')
         display.textContent = division(storedValues[0], storedValues[1]);
-    else
-        return "ERROR OPERATING";
+    
 
     operationValue = '';
 
@@ -66,7 +78,8 @@ function operate() {
         storedValues[0] = Number(display.textContent);
     }
 
-    storedValues.pop();
+    if (storedValues.length == 2)
+        storedValues.pop();
     displayContainer.appendChild(display);
     isResultStored = true;
 }
@@ -190,4 +203,12 @@ function isLargeNum(number) {
     return (count > 16) ? true : false;
 }
 
+
+// check if values are undefined
+
+function isUndefined(a, b) {
+    if (a == undefined || b == undefined) 
+        return true;
+    return false;
+}
 
