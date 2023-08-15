@@ -54,10 +54,19 @@ function operate() {
         return "ERROR OPERATING";
 
     operationValue = '';
-    storedValues[0] = Number(display.textContent);
-    storedValues.pop();
 
     
+    
+    // Rounds Numbers for values over 16 digits
+    if (isLargeNum(Number(display.textContent))) {
+        display.textContent = roundNumber(Number(display.textContent));
+        storedValues[0] = display.textContent;
+    }   
+    else {
+        storedValues[0] = Number(display.textContent);
+    }
+
+    storedValues.pop();
     displayContainer.appendChild(display);
     isResultStored = true;
 }
@@ -83,8 +92,13 @@ function display(e) {
         clearDisplay();
         isResultStored = false;
     }
-    displayValue.push(Number(display.textContent));
-    displayContainer.appendChild(display);
+
+    // Makes Sure Overflow doesnt occcur .. if not appends to display container
+    const totalDivs = document.querySelectorAll('.display');
+    if (totalDivs.length < 16) {
+        displayValue.push(Number(display.textContent));
+        displayContainer.appendChild(display);
+    }
 
 }
 
@@ -157,7 +171,23 @@ function clearDisplay() {
 
 }
 
+// Rounds a Given Exponential Number to four decimal places .. Returns a number
 
-// Checks that display is within its container
+function roundNumber(number) {
+    return number.toExponential(12);
+}
+
+// Checks if given number is over 16 digits 
+
+function isLargeNum(number) {
+    let count = 0;
+    
+    while (number > 0) {
+        number = Math.floor(number / 10);
+        count++;
+    }
+
+    return (count > 16) ? true : false;
+}
 
 
