@@ -24,8 +24,7 @@ const multiplication = function multiply(a, b) {
 }
 
 const division = function divide(a, b) {
-    if (isUndefined(a, b))
-        return 0;
+
     return a / b;
 }
 
@@ -61,8 +60,10 @@ function operate() {
         display.textContent = subtraction(storedValues[0], storedValues[1]);
     else if (operationValue == 'x')
         display.textContent = multiplication(storedValues[0], storedValues[1]);
-    else if (operationValue == '/')
+    else if (operationValue == '/') {
+
         display.textContent = division(storedValues[0], storedValues[1]);
+    }
     
 
     operationValue = '';
@@ -71,17 +72,24 @@ function operate() {
     
     // Rounds Numbers for values over 16 digits
     if (isLargeNum(Number(display.textContent))) {
+        console.log(1);
         display.textContent = roundNumber(Number(display.textContent));
         storedValues[0] = display.textContent;
     }   
-    else {
-        storedValues[0] = Number(display.textContent);
+    else if (display.textContent == "NaN") {
+        display.textContent = "ERR: DivByZero";
+        storedValues.pop();
     }
 
+    else 
+        storedValues[0] = Number(display.textContent);
+
+    // Check for Operand Division
     if (storedValues.length == 2)
         storedValues.pop();
     displayContainer.appendChild(display);
     isResultStored = true;
+
 }
 
 // Populates display when number buttons are clicked .. stores in display value
