@@ -1,5 +1,6 @@
 let firstNumber, secondNumber, operator, prevOperation;
 let isResultStored = false;
+let decimalCount = 0;
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
     // Checks whether given number values are defined 
@@ -50,7 +51,6 @@ function operate() {
 
     storesDisplay();
 
-
     if (operationValue == '+')
         display.textContent = addition(storedValues[0], storedValues[1]);
     else if (operationValue == '-')
@@ -97,9 +97,10 @@ numbers.forEach((number) => {
 })
 
 function display(e) {
+    
     const displayContainer = document.querySelector('.display-container');
     const display = document.createElement('p');
-    
+
     display.classList.add('display');
     display.textContent = e.target.textContent;
     
@@ -115,12 +116,20 @@ function display(e) {
     if (totalDivs.length < 16) {
         // Checks for decimal in displayValues arr if exists append to display
         if (display.textContent.includes('.')) {
+            
+            // Check for one decimal point per displayValues
+            decimalCount += 1;
             display.textContent = '.';
+            
+            if (decimalCount > 1)
+                return;
+
             displayValue.push(display.textContent);
         }
         else
             displayValue.push(Number(display.textContent));
-            
+
+    
         displayContainer.appendChild(display);
     }
 
@@ -138,6 +147,11 @@ function storesDisplay() {
     let isDecimal = false;
     let power = 0;
     let decimalLocation = -1;
+    
+    // Removes last element if last index of displayValue is a decimal
+    if (displayValue[displayValue.length - 1] == '.')
+        displayValue.pop();
+
     // checks if a decimal point is present in displayvalue
     for (let i = 0; i < displayValue.length; i++) {
         if (displayValue[i] == '.') {
@@ -149,12 +163,15 @@ function storesDisplay() {
     if (isDecimal) {
         power = decimalLocation - 1;
         storedNum = convertDisplay(power);
+
+        // Adds the numbers after decimal place
         let afterDecimal = '';
 
         for (let i = decimalLocation + 1; i < displayValue.length; i++) {
             afterDecimal += displayValue[i];
         }
 
+        // Appends stored nums with after decimal numbers
         storedNum += Number(`.${afterDecimal}`);
     }
     // Regular Integers
@@ -169,6 +186,7 @@ function storesDisplay() {
         storedValues.push(storedNum);
     
     isDecimal = false;
+    decimalCount = 0;
 }
 
 // Clears display when AC button is clicked
@@ -188,6 +206,7 @@ function clearAC () {
     displayValue.splice(0,displayValue.length);
     storedValues.splice(0,storedValues.length);
     isResultStored = false;
+    decimalCount = 0;
 }
 
 
@@ -218,16 +237,19 @@ function clearDisplay() {
 
 }
 
+// Delete / Backspace key functionality
 const deleteKey = document.querySelector('.backspace');
 deleteKey.addEventListener('click', deleteNum);
 
 function deleteNum() {
     
+    // Checks for empty displayValues arr if so resets calculator
     if (displayValue.length == 0) {
         clearAC();
         return;
     }
-        
+    
+    // Removes last element from display-container and displayValues array
     const displayContainer = document.querySelector('.display-container');
     displayContainer.removeChild(displayContainer.lastElementChild);
 
