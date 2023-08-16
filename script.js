@@ -68,7 +68,6 @@ function operate() {
     
     // Rounds Numbers for values over 16 digits
     if (isLargeNum(Number(display.textContent))) {
-        console.log(1);
         display.textContent = roundNumber(Number(display.textContent));
         storedValues[0] = display.textContent;
     }   
@@ -219,10 +218,10 @@ function clearDisplay() {
 
 }
 
-// Rounds a Given Exponential Number to four decimal places .. Returns a number
+// Rounds a Given Exponential Number to four decimal places .. Returns a rounded number
 
 function roundNumber(number) {
-    return number.toExponential(12);
+    return number.toExponential(11);
 }
 
 // Checks if given number is over 16 digits 
