@@ -103,17 +103,25 @@ function display(e) {
     
     display.classList.add('display');
     display.textContent = e.target.textContent;
+    
 
     // Checks if Chaining is occuring (Result already in storedValues) ? clears : continues
     if (isResultStored == true) {
         clearDisplay();
         isResultStored = false;
     }
-
+    
     // Makes Sure Overflow doesnt occcur .. if not appends to display container
     const totalDivs = document.querySelectorAll('.display');
     if (totalDivs.length < 16) {
-        displayValue.push(Number(display.textContent));
+        // Checks for decimal in displayValues arr if exists append to display
+        if (display.textContent.includes('.')) {
+            display.textContent = '.';
+            displayValue.push(display.textContent);
+        }
+        else
+            displayValue.push(Number(display.textContent));
+            
         displayContainer.appendChild(display);
     }
 
@@ -127,18 +135,41 @@ operands.forEach((operand) => {
 })
 
 function storesDisplay() {
-    let finalVal = 0;
-    let power = displayValue.length - 1;
+    let storedNum = 0;
+    let isDecimal = false;
+    let power = 0;
+    let decimalLocation = -1;
+    // checks if a decimal point is present in displayvalue
     for (let i = 0; i < displayValue.length; i++) {
-        finalVal += (displayValue[i] * Math.pow(10, power));
-        power--;
+        if (displayValue[i] == '.') {
+            decimalLocation = i;
+            isDecimal = true;
+        }        
     }
+    // Decimal values
+    if (isDecimal) {
+        power = decimalLocation - 1;
+        storedNum = convertDisplay(power);
+        let afterDecimal = '';
 
-    clearDisplay();
-    if (finalVal != 0)
-        storedValues.push(finalVal);
+        for (let i = decimalLocation + 1; i < displayValue.length; i++) {
+            afterDecimal += displayValue[i];
+        }
+
+        storedNum += Number(`.${afterDecimal}`);
+    }
+    // Regular Integers
+    else {
+        power = displayValue.length - 1;
+        storedNum = convertDisplay(power);
+    }
     
 
+    clearDisplay();
+    if (storedNum != 0)
+        storedValues.push(storedNum);
+    
+    isDecimal = false;
 }
 
 // Clears display when AC button is clicked
@@ -216,3 +247,16 @@ function isUndefined(a, b) {
     return false;
 }
 
+// Returns array of integers in displayValue array into one integer value
+// Returns only the integer part of an array for decimal displayValues
+
+function convertDisplay(power) {
+    let finalVal = 0; 
+    let length = power + 1;
+    for (let i = 0; i < length; i++) {
+        finalVal += (displayValue[i] * Math.pow(10, power));
+        power--;
+    }
+
+    return finalVal;
+}

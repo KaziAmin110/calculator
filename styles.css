@@ -91,5 +91,9 @@ body {
 }
 
 .zero {
-    width: 272px;
+    width: 100px;
+}
+
+.decimal {
+    justify-self: center;
 }
