@@ -94,6 +94,11 @@ body {
     width: 100px;
 }
 
-.decimal {
-    justify-self: center;
+
+.backspace {
+    width: 40px;
+    height: 30px;
+    background-color: lightskyblue;
+    border-radius: 10px;
+    border: 1px solid darkgrey;
 }

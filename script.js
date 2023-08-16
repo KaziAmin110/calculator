@@ -218,6 +218,24 @@ function clearDisplay() {
 
 }
 
+const deleteKey = document.querySelector('.backspace');
+deleteKey.addEventListener('click', deleteNum);
+
+function deleteNum() {
+    
+    if (displayValue.length == 0) {
+        clearAC();
+        return;
+    }
+        
+    const displayContainer = document.querySelector('.display-container');
+    displayContainer.removeChild(displayContainer.lastElementChild);
+
+    displayValue.pop();
+}
+
+
+
 // Rounds a Given Exponential Number to four decimal places .. Returns a rounded number
 
 function roundNumber(number) {
