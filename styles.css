@@ -6,7 +6,6 @@
 
 body {
     display: flex;
-    border: 1px solid pink;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -24,7 +23,9 @@ body {
     flex-direction: column;
     height: 350px;
     width: 300px;
-    border: 1px solid red;
+    border: 6px solid rgb(37, 36, 36);
+    border-radius: 10px;
+    background-color: black;
 
 }
 
@@ -33,47 +34,60 @@ body {
     height: 90px;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-right: 12px;
-    border: 1px solid green;
+    margin: 15px;
+    border-radius: 10px;
+    background-color: lightgrey;
 }
 
 .display {
     font-size: 30px;
     font-weight: bold;
-    border: 1px solid pink;
-    
+    padding-right: 2px; 
 }
 
 .buttons-container {
-    border:1px solid blue;
     flex:1;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 18px;
+    background-color: black;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .clear {
     width: 40px;
     height: 30px;
+    background-color: lightskyblue;
+    border-radius: 10px;
+    border: 1px solid darkgrey;
 }
 
 .equal {
     width: 40px;
     height: 30px;
+    background-color: orangered;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
 }
 
 .numbers {
     width: 40px;
     height: 30px;
+    border-radius: 15px;
+    border: solid 1px darkgrey;
+    background-color: darkcyan;
 
 }
 
 .operand {
+    background-color: orangered;
     width: 40px;
     height: 30px;
-
+    border-radius: 15px;
+    border: 1px solid slategray;
 }
 
 .zero {
