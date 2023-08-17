@@ -119,7 +119,7 @@ numbers.forEach((number) => {
 
 
 function display(e) {
-    
+    let isPlusMinus = false;
     const displayContainer = document.querySelector('.display-container');
     const display = document.createElement('p');
 
@@ -151,8 +151,14 @@ function display(e) {
             return;
     }
     // Sets textContent for click event
-    else
-        display.textContent = e.target.textContent;
+    else {
+        if (e.target.textContent == '+ / -') {
+            isPlusMinus = true;
+        }
+        else
+            display.textContent = e.target.textContent;
+    }
+        
     
     // Checks if Chaining is occuring (Result already in storedValues) ? clears : continues
     if (isResultStored == true) {
@@ -175,10 +181,24 @@ function display(e) {
 
             displayValue.push(display.textContent);
         }
-        else
+        else if (!isPlusMinus)
             displayValue.push(Number(display.textContent));
-
-    
+        else {
+            displayValue = makePlusMinus(displayValue);
+            let emptyArr = [];
+            let emptyString = '';
+            for (let i = 0; i < displayValue.length; i++) {
+                emptyArr.push(displayValue[i]);
+                emptyString += displayValue[i];
+            }
+            
+            clearDisplay();
+            
+            for (let i = 0; i < emptyArr.length; i++)
+                displayValue.push(emptyArr[i]);
+            display.textContent = emptyString;
+        }
+        
         displayContainer.appendChild(display);
     }
 
@@ -194,12 +214,18 @@ operands.forEach((operand) => {
 function storesDisplay() {
     let storedNum = 0;
     let isDecimal = false;
+    let isNegative = false;
     let power = 0;
     let decimalLocation = -1;
     
     // Removes last element if last index of displayValue is a decimal
     if (displayValue[displayValue.length - 1] == '.')
         displayValue.pop();
+    // Removes first endex if it's a negative number
+    else if (displayValue[0] == '-') {
+        isNegative = true;
+        displayValue.splice(0, 1);
+    }
 
     // checks if a decimal point is present in displayvalue
     for (let i = 0; i < displayValue.length; i++) {
@@ -231,11 +257,18 @@ function storesDisplay() {
     
 
     clearDisplay();
-    if (storedNum != 0)
+    if (storedNum != 0 && isNegative) {
+        storedNum = Number(`-${storedNum}`);
         storedValues.push(storedNum);
+    }
+    else if (storedNum != 0)
+        storedValues.push(storedNum);
+    
+
     
     isDecimal = false;
     decimalCount = 0;
+    isNegative = false;
 }
 
 // Clears display when AC button is clicked
@@ -317,8 +350,9 @@ keyboardButtons.forEach((button) => {
 const posNeg = document.querySelector('.plus-negative');
 posNeg.addEventListener('click', changeSign);
 
-function changeSign() {
-    
+function changeSign(e) {
+    let displayString = '';
+    display(e);
 }
 
 
@@ -401,4 +435,15 @@ function isBackspace(key) {
         return true;
     else
         return false;
+}
+
+function makePlusMinus(array) {
+    array.push(1);
+    let size = array.length;
+    for (let i = size - 1; i > 0; i--) {
+        array[i] = array[i - 1];
+    }
+    array[0] = '-';
+
+    return array;
 }
