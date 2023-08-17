@@ -32,13 +32,11 @@ function getOperation(e) {
 
     if (operationValue == '')
         operationValue = e.target.textContent;
+
     else {
         operate();
         operationValue = e.target.textContent;
     }
-    
-    
-    
 }
 
 // operation function - takes operator and two numbers and returns operation
@@ -72,7 +70,7 @@ function operate() {
         storedValues[0] = display.textContent;
     }   
     else if (display.textContent == "NaN") {
-        display.textContent = "ERR: DivByZero";
+        display.textContent = "ERROR";
         storedValues.pop();
     }
 
@@ -96,15 +94,18 @@ numbers.forEach((number) => {
     number.addEventListener('click', display);
 })
 
+
+
 function display(e) {
     
     const displayContainer = document.querySelector('.display-container');
     const display = document.createElement('p');
 
     display.classList.add('display');
+
+    
     display.textContent = e.target.textContent;
     
-
     // Checks if Chaining is occuring (Result already in storedValues) ? clears : continues
     if (isResultStored == true) {
         clearDisplay();
@@ -218,6 +219,7 @@ operations.forEach((operation) => {
     operation.addEventListener('click', getOperation);
 })
 
+
 // Performs operation when the equal key is pressed
 
 const equalKey = document.querySelector('.equal');
@@ -299,3 +301,4 @@ function convertDisplay(power) {
 
     return finalVal;
 }
+
