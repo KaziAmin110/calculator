@@ -10,18 +10,20 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    background-color: black;
 }
 
 .calculator-title {
     margin-bottom: 50px;
     font-size: 30px;
+    color: white;
     text-decoration: solid;
 }
 
 .calculator-container {
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 500px;
     width: 300px;
     border: 6px solid rgb(37, 36, 36);
     border-radius: 10px;
@@ -48,56 +50,58 @@ body {
 .buttons-container {
     flex:1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 12px;
     background-color: black;
-    border-radius: 10px;
     padding: 5px;
+    margin-left: 10px;
+    border-left: -1px solid rgb(37, 36, 36);
+    border-right: -1px solid rgb(37, 36, 36);
 }
 
+.button {
+    width: 55px;
+    height: 35px;
+    font-size: 20px;
+}
 .clear {
-    width: 40px;
-    height: 30px;
     background-color: lightskyblue;
     border-radius: 10px;
     border: 1px solid darkgrey;
 }
 
 .equal {
-    width: 40px;
-    height: 30px;
     background-color: orangered;
     border-radius: 15px;
     border: 1px solid darkgrey;
 }
 
 .numbers {
-    width: 40px;
-    height: 30px;
     border-radius: 15px;
     border: solid 1px darkgrey;
     background-color: darkcyan;
-
 }
 
 .operand {
     background-color: orangered;
-    width: 40px;
-    height: 30px;
     border-radius: 15px;
     border: 1px solid slategray;
 }
 
 .zero {
-    width: 100px;
+    width: 123px;
 }
 
 
 .backspace {
-    width: 40px;
-    height: 30px;
+    background-color: lightskyblue;
+    border-radius: 10px;
+    border: 1px solid darkgrey;
+}
+
+.plus-negative {
     background-color: lightskyblue;
     border-radius: 10px;
     border: 1px solid darkgrey;

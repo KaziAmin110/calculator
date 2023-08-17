@@ -313,6 +313,14 @@ keyboardButtons.forEach((button) => {
     button.addEventListener('keydown', display);
 })
 
+//
+const posNeg = document.querySelector('.plus-negative');
+posNeg.addEventListener('click', changeSign);
+
+function changeSign() {
+    
+}
+
 
 // Rounds a Given Exponential Number to four decimal places .. Returns a rounded number
 
