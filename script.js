@@ -29,14 +29,40 @@ const division = function divide(a, b) {
 
 
 function getOperation(e) {
-
-    if (operationValue == '')
-        operationValue = e.target.textContent;
-
-    else {
-        operate();
-        operationValue = e.target.textContent;
+    // getOperation for keyboard event 
+    if (e.type == 'keydown') {
+        // First Operand
+        if (operationValue == '') {
+            // Converts * event into x for operate function
+            if (e.key == '*')
+                operationValue = 'x';
+            else
+                operationValue = e.key;
+        }
+        // Chain operand    
+        else {
+            // Converts * event into x for operate function
+            if (e.key == '*') {
+                operate();
+                operationValue = 'x';
+            }
+                
+            else {
+                operate();
+                operationValue = e.key;
+            }
+        }
     }
+    else {
+        if (operationValue == '')
+            operationValue = e.target.textContent;
+
+        else {
+            operate();
+            operationValue = e.target.textContent;
+        }
+    }
+    
 }
 
 // operation function - takes operator and two numbers and returns operation
@@ -103,8 +129,27 @@ function display(e) {
 
     display.classList.add('display');
 
-    
-    display.textContent = e.target.textContent;
+    // Sets textContent for keyboard event
+    if (e.type == 'keydown') {
+
+        if (isNumber(e.key)) {
+            display.textContent = e.key;
+        }
+        else if (isOperand(e.key)) {
+            storesDisplay();
+            getOperation(e);
+            return;
+        }
+        else if (isBackspace(e.key)) {
+            deleteNum();
+            return;
+        } 
+        else
+            display.textContent = '?';
+    }       
+    // Sets textContent for click event
+    else
+        display.textContent = e.target.textContent;
     
     // Checks if Chaining is occuring (Result already in storedValues) ? clears : continues
     if (isResultStored == true) {
@@ -258,6 +303,12 @@ function deleteNum() {
     displayValue.pop();
 }
 
+// Add Keyboard functionality
+
+const keyboardButtons = document.querySelectorAll('.button');
+keyboardButtons.forEach((button) => {
+    button.addEventListener('keydown', display);
+})
 
 
 // Rounds a Given Exponential Number to four decimal places .. Returns a rounded number
@@ -302,3 +353,41 @@ function convertDisplay(power) {
     return finalVal;
 }
 
+function isNumber(key) {
+    switch (key) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '.':
+            return true;
+        default:
+            return false;
+    }
+}
+
+function isOperand(key) {
+    switch (key) {
+        case '+':
+        case '-':
+        case '/':
+        case '*':
+        case '=':
+            return true; 
+        default:
+            return false;
+    }
+}
+
+function isBackspace(key) {
+    if (key == 'Backspace')
+        return true;
+    else
+        return false;
+}
