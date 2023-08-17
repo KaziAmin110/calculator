@@ -74,7 +74,7 @@ function operate() {
 
 
     storesDisplay();
-
+    
     if (operationValue == '+')
         display.textContent = addition(storedValues[0], storedValues[1]);
     else if (operationValue == '-')
@@ -83,12 +83,7 @@ function operate() {
         display.textContent = multiplication(storedValues[0], storedValues[1]);
     else if (operationValue == '/')
         display.textContent = division(storedValues[0], storedValues[1]);
-    
-    
-
-    operationValue = '';
-
-    
+        
     
     // Rounds Numbers for values over 16 digits
     if (isLargeNum(Number(display.textContent))) {
@@ -99,16 +94,17 @@ function operate() {
         display.textContent = "ERROR";
         storedValues.pop();
     }
-
-    else 
+    else {
         storedValues[0] = Number(display.textContent);
-
+    }
+    
     // Check for Operand Division
     if (storedValues.length == 2)
         storedValues.pop();
-    displayContainer.appendChild(display);
-    isResultStored = true;
 
+    displayContainer.appendChild(display);    
+    isResultStored = true;
+    operationValue = '';
 }
 
 // Populates display when number buttons are clicked .. stores in display value
@@ -131,7 +127,7 @@ function display(e) {
 
     // Sets textContent for keyboard event
     if (e.type == 'keydown') {
-
+        
         if (isNumber(e.key)) {
             display.textContent = e.key;
         }
@@ -144,9 +140,16 @@ function display(e) {
             deleteNum();
             return;
         } 
+        // Enter key event (=)
+        else if (e.key == 'Enter') {
+            // Prevents default event of enter key
+            e.preventDefault();
+            operate();
+            return;
+        }
         else
-            display.textContent = '?';
-    }       
+            return;
+    }
     // Sets textContent for click event
     else
         display.textContent = e.target.textContent;
