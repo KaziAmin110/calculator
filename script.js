@@ -74,7 +74,8 @@ function operate() {
 
 
     storesDisplay();
-    
+    clearDisplay();
+
     if (operationValue == '+')
         display.textContent = addition(storedValues[0], storedValues[1]);
     else if (operationValue == '-')
@@ -152,6 +153,7 @@ function display(e) {
     }
     // Sets textContent for click event
     else {
+        
         if (e.target.textContent == '+ / -') {
             isPlusMinus = true;
         }
@@ -165,7 +167,9 @@ function display(e) {
         clearDisplay();
         isResultStored = false;
     }
-    
+
+    if (operationValue != '' && displayValue.length == 0)
+        clearDisplay();
     // Makes Sure Overflow doesnt occcur .. if not appends to display container
     const totalDivs = document.querySelectorAll('.display');
     if (totalDivs.length < 16) {
@@ -256,7 +260,7 @@ function storesDisplay() {
     }
     
 
-    clearDisplay();
+    // clearDisplay();
     if (storedNum != 0 && isNegative) {
         storedNum = Number(`-${storedNum}`);
         storedValues.push(storedNum);
@@ -264,8 +268,11 @@ function storesDisplay() {
     else if (storedNum != 0)
         storedValues.push(storedNum);
     
-
-    
+    if (storedValues.length > 2) {
+        storedValues.splice(2, storedValues.length - 2)
+    }
+    // Clear displayValue && resets decimal and negative value variables
+    displayValue.splice(0, displayValue.length);
     isDecimal = false;
     decimalCount = 0;
     isNegative = false;
