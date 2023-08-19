@@ -1,6 +1,7 @@
 let firstNumber, secondNumber, operator, prevOperation;
 let isResultStored = false;
 let decimalCount = 0;
+let isZeroRemoved = false;
 // Addition, subtraction, multiplication, division functions
 const addition = function add(a, b) {
     // Checks whether given number values are defined 
@@ -71,8 +72,10 @@ function operate() {
     const display = document.createElement('p');
     display.classList.add('display');
 
-
-
+    // Doesnt remove zero display
+    if (storedValues.length == 1 && storedValues[0] == 0)
+        return;
+    
     storesDisplay();
     clearDisplay();
 
@@ -103,6 +106,7 @@ function operate() {
     if (storedValues.length == 2)
         storedValues.pop();
 
+
     displayContainer.appendChild(display);    
     isResultStored = true;
     operationValue = '';
@@ -111,6 +115,7 @@ function operate() {
 // Populates display when number buttons are clicked .. stores in display value
 let displayValue = [];
 let storedValues = [];
+storedValues[0] = 0;
 const numbers = document.querySelectorAll('.numbers');
 
 numbers.forEach((number) => {
@@ -126,10 +131,35 @@ function display(e) {
 
     display.classList.add('display');
 
+    const zeroDisplay = document.querySelector('.zero-display');
+    
+    // Checks if default display screen is present if so removes zero-display as well as 0 from the storedValues array
+    if (storedValues[0] == 0 && zeroDisplay != null && e.type == 'click') {
+        displayContainer.removeChild(zeroDisplay);
+        isZeroRemoved = true;
+        console.log(storedValues);
+
+        if (operationValue == '')
+            storedValues.pop();
+    }
+
+    // Clears display if operationValue and displayvalue are empty
+    else if (operationValue != '' && displayValue.length == 0) 
+        clearDisplay();
+
     // Sets textContent for keyboard event
     if (e.type == 'keydown') {
         
+        // Keyboard check 
         if (isNumber(e.key)) {
+            if (storedValues == 0 && zeroDisplay != null) {
+                displayContainer.removeChild(zeroDisplay);
+                isZeroRemoved = true;
+
+                if (operationValue == '')
+                    storedValues.pop();
+
+            }
             display.textContent = e.key;
         }
         else if (isOperand(e.key)) {
@@ -168,8 +198,8 @@ function display(e) {
         isResultStored = false;
     }
 
-    if (operationValue != '' && displayValue.length == 0)
-        clearDisplay();
+    
+        
     // Makes Sure Overflow doesnt occcur .. if not appends to display container
     const totalDivs = document.querySelectorAll('.display');
     if (totalDivs.length < 16) {
@@ -203,6 +233,7 @@ function display(e) {
             display.textContent = emptyString;
         }
         
+
         displayContainer.appendChild(display);
     }
 
@@ -221,6 +252,10 @@ function storesDisplay() {
     let isNegative = false;
     let power = 0;
     let decimalLocation = -1;
+
+    if (isZeroRemoved && operationValue == '') {
+        isZeroRemoved = false;
+    }
     
     // Removes last element if last index of displayValue is a decimal
     if (displayValue[displayValue.length - 1] == '.')
@@ -268,9 +303,12 @@ function storesDisplay() {
     else if (storedNum != 0)
         storedValues.push(storedNum);
     
+    // Makes sure only 2 values are present in storedValues arr at all times
     if (storedValues.length > 2) {
         storedValues.splice(2, storedValues.length - 2)
     }
+
+    
     // Clear displayValue && resets decimal and negative value variables
     displayValue.splice(0, displayValue.length);
     isDecimal = false;
@@ -293,9 +331,23 @@ function clearAC () {
 
     operationValue = '';
     displayValue.splice(0,displayValue.length);
-    storedValues.splice(0,storedValues.length);
+    if (storedValues[0] == 0)
+        return;
+    else
+        storedValues.splice(0,storedValues.length);
+
+    // Adds zero on display
+    const display = document.createElement('p');
+    display.classList.add('zero-display');
+
+
+    display.textContent = 0;
+    displayContainer.appendChild(display);
+    storedValues[0] = 0;
     isResultStored = false;
     decimalCount = 0;
+
+    isClear = true;
 }
 
 
@@ -312,6 +364,7 @@ operations.forEach((operation) => {
 
 const equalKey = document.querySelector('.equal');
 equalKey.addEventListener('click', operate);
+
 
 
 // Clears only the displayValue (Used in Operations where the storedValues are still utilized)
@@ -338,12 +391,15 @@ function deleteNum() {
         clearAC();
         return;
     }
-    
-    // Removes last element from display-container and displayValues array
-    const displayContainer = document.querySelector('.display-container');
-    displayContainer.removeChild(displayContainer.lastElementChild);
+    else {
+        // Removes last element from display-container and displayValues array
+        const displayContainer = document.querySelector('.display-container');
 
-    displayValue.pop();
+        displayContainer.removeChild(displayContainer.lastElementChild);
+
+        displayValue.pop();
+    }
+    
 }
 
 // Add Keyboard functionality

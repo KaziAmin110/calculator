@@ -106,3 +106,9 @@ body {
     border-radius: 10px;
     border: 1px solid darkgrey;
 }
+
+.zero-display {
+    font-size: 30px;
+    font-weight: bold;
+    padding-right: 2px; 
+}
