@@ -1,5 +1,5 @@
 # calculator
-Created a fully-functioning calculator from scratch using html, css, and vanilla javascript.
+Created a fully-functioning GUI calculator from scratch using HTML, CSS, and Vanilla Javascript.
  
 *Button events work through click and keyboard down press
 *Offers Multi-operation chaining
